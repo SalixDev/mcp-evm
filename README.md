@@ -1,6 +1,6 @@
-# mcp-monad
+# mcp-evm
 
-A **Model Context Protocol** server for Monad and other EVM chains. Built on the [Etherscan v2 unified API](https://docs.etherscan.io/etherscan-v2) — one API key, every supported chain (Monad, Ethereum, Polygon, Arbitrum, Optimism, Base, BSC, …).
+A **Model Context Protocol** server for EVM chains — Monad, Ethereum, Polygon, Arbitrum, Optimism, Base, BSC, and any other chain supported by [Etherscan v2](https://docs.etherscan.io/etherscan-v2). Built on the [Etherscan v2 unified API](https://docs.etherscan.io/etherscan-v2) — one API key, every supported chain (Monad, Ethereum, Polygon, Arbitrum, Optimism, Base, BSC, …).
 
 Connects via **stdio**. Works with Claude Code, Cursor, and any MCP client.
 
@@ -31,8 +31,8 @@ Default chain is set by `DEFAULT_CHAIN` in `.env` (defaults to Monad mainnet `14
 1. Get an Etherscan v2 API key (free, takes 30s): https://etherscan.io/myapikey
 2. Clone and install:
    ```bash
-   git clone https://github.com/SalixDev/mcp-monad
-   cd mcp-monad
+   git clone https://github.com/SalixDev/mcp-evm
+   cd mcp-evm
    npm install
    cp .env.example .env
    # paste your key into .env
@@ -41,17 +41,17 @@ Default chain is set by `DEFAULT_CHAIN` in `.env` (defaults to Monad mainnet `14
    ```bash
    npm run dev
    ```
-   You should see `[mcp-monad] connected. default_chain=143` on stderr. Ctrl+C to exit.
+   You should see `[mcp-evm] connected. default_chain=143` on stderr. Ctrl+C to exit.
 
 ## Connect to Claude Code
 
 From inside the cloned folder:
 
 ```bash
-claude mcp add mcp-monad --scope user -- npx -y tsx "$(pwd)/src/server.ts"
+claude mcp add mcp-evm --scope user -- npx -y tsx "$(pwd)/src/server.ts"
 ```
 
-Restart Claude Code. Run `/mcp`. You should see `mcp-monad · ✓ connected · 4 tools`.
+Restart Claude Code. Run `/mcp`. You should see `mcp-evm · ✓ connected · 4 tools`.
 
 ## Try it
 

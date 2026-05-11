@@ -90,7 +90,7 @@ const GetGasPriceArgs = z.object({
 
 // ---- MCP server -----------------------------------------------------------
 const server = new Server(
-  { name: "mcp-monad", version: "0.1.0" },
+  { name: "mcp-evm", version: "0.1.0" },
   { capabilities: { tools: {} } },
 );
 
@@ -236,4 +236,4 @@ server.setRequestHandler(CallToolRequestSchema, async (req) => {
 
 const transport = new StdioServerTransport();
 await server.connect(transport);
-console.error(`[mcp-monad] connected. default_chain=${DEFAULT_CHAIN}`);
+console.error(`[mcp-evm] connected. default_chain=${DEFAULT_CHAIN}`);
