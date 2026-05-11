@@ -12,7 +12,7 @@ import {
 import { z } from "zod";
 
 const API_KEY = process.env.ETHERSCAN_API_KEY;
-const DEFAULT_CHAIN = Number(process.env.DEFAULT_CHAIN ?? 143);
+const DEFAULT_CHAIN = Number(process.env.DEFAULT_CHAIN ?? 1);
 
 if (!API_KEY) {
   console.error("Missing ETHERSCAN_API_KEY in env");

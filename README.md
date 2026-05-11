@@ -24,7 +24,7 @@ All tools accept an optional `chain` argument. Pass a **numeric chainid** (e.g. 
 | `base` | 8453 |
 | `bsc` | 56 |
 
-Default chain is set by `DEFAULT_CHAIN` in `.env` (defaults to Monad mainnet `143`).
+Default chain is set by `DEFAULT_CHAIN` in `.env` (defaults to Ethereum mainnet `1`).
 
 ## Setup
 
@@ -41,7 +41,7 @@ Default chain is set by `DEFAULT_CHAIN` in `.env` (defaults to Monad mainnet `14
    ```bash
    npm run dev
    ```
-   You should see `[mcp-evm] connected. default_chain=143` on stderr. Ctrl+C to exit.
+   You should see `[mcp-evm] connected. default_chain=1` on stderr. Ctrl+C to exit.
 
 ## Connect to Claude Code
 
