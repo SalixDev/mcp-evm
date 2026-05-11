@@ -53,6 +53,19 @@ claude mcp add mcp-evm --scope user -- npx -y tsx "$(pwd)/src/server.ts"
 
 Restart Claude Code. Run `/mcp`. You should see `mcp-evm · ✓ connected · 4 tools`.
 
+Verify the registration captured the server path:
+
+```bash
+claude mcp list | grep mcp-evm
+```
+
+The output should show the full `npx -y tsx /absolute/path/to/src/server.ts`. If you only see `npx -y tsx` with no path, a stale registration blocked the add (the `add` command exits with `already exists` instead of overwriting). Fix:
+
+```bash
+claude mcp remove mcp-evm --scope user
+claude mcp add mcp-evm --scope user -- npx -y tsx "$(pwd)/src/server.ts"
+```
+
 ## Try it
 
 ```
