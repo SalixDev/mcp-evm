@@ -154,11 +154,32 @@ export async function getGasPrice(
   cfg: ToolConfig,
 ): Promise<object> {
   const chainid = resolveChain(args.chain, cfg.defaultChain);
-  const result = await etherscan(cfg.apiKey, chainid, {
-    module: "gastracker",
-    action: "gasoracle",
-  });
-  return { chainid, ...(result as object) };
+  // Try gastracker first — gives safe/propose/fast split (Ethereum, Polygon, Arbitrum, BSC, ...).
+  try {
+    const result = (await etherscan(cfg.apiKey, chainid, {
+      module: "gastracker",
+      action: "gasoracle",
+    })) as Record<string, string>;
+    return { chainid, source: "gastracker", ...result };
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    // Fallback to raw eth_gasPrice via the proxy module — works on every EVM chain incl. Monad.
+    if (/Missing Or invalid Module/i.test(msg)) {
+      const hex = (await etherscan(cfg.apiKey, chainid, {
+        module: "proxy",
+        action: "eth_gasPrice",
+      })) as string;
+      const wei = BigInt(hex);
+      const gwei = (Number(wei) / 1e9).toString();
+      return {
+        chainid,
+        source: "eth_gasPrice",
+        gas_price_wei: wei.toString(),
+        gas_price_gwei: gwei,
+      };
+    }
+    throw err;
+  }
 }
 
 // ---- Shared tool-description schemas (used by stdio + http transports) ---
