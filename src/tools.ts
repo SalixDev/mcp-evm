@@ -164,7 +164,7 @@ export async function getGasPrice(
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     // Fallback to raw eth_gasPrice via the proxy module — works on every EVM chain incl. Monad.
-    if (/Missing Or invalid Module/i.test(msg)) {
+    if (/Missing Or invalid (Module|Action) name/i.test(msg)) {
       const hex = (await etherscan(cfg.apiKey, chainid, {
         module: "proxy",
         action: "eth_gasPrice",
