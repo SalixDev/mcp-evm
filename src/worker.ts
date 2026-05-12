@@ -15,7 +15,6 @@ import {
 interface Env {
   ETHERSCAN_API_KEY: string;
   DEFAULT_CHAIN?: string;
-  MCP_BEARER_TOKEN: string;
   MCP_OBJECT: DurableObjectNamespace;
 }
 
@@ -71,13 +70,6 @@ export class EvmMcp extends McpAgent<Env> {
   }
 }
 
-function unauthorized(): Response {
-  return new Response(JSON.stringify({ error: "unauthorized" }), {
-    status: 401,
-    headers: { "content-type": "application/json", "www-authenticate": "Bearer" },
-  });
-}
-
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
@@ -90,12 +82,6 @@ export default {
     }
 
     if (url.pathname === "/mcp") {
-      // Bearer-token auth (skip in local dev if no token is configured).
-      if (env.MCP_BEARER_TOKEN) {
-        const auth = request.headers.get("authorization") ?? "";
-        const expected = `Bearer ${env.MCP_BEARER_TOKEN}`;
-        if (auth !== expected) return unauthorized();
-      }
       return EvmMcp.serve("/mcp").fetch(request, env, ctx);
     }
 
