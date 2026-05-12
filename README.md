@@ -9,6 +9,12 @@ Two transports, same tool surface:
 
 Works with Claude Code, Cursor, and any MCP client.
 
+## Demo
+
+![Claude Code answering a multi-chain balance query via mcp-evm](docs/demo.gif)
+
+One natural-language prompt, four chains queried in parallel using evm-mcp via http
+
 ## Tools
 
 - `get_balance(address, chain?)` — native token balance (wei + decimal).
