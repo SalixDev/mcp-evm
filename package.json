@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/server.ts",
+    "dev:worker": "wrangler dev",
+    "deploy": "wrangler deploy",
     "build": "tsc"
   },
   "repository": {
@@ -21,12 +23,15 @@
   "description": "",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
+    "agents": "^0.12.3",
     "dotenv": "^17.4.2",
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260511.1",
     "@types/node": "^25.6.2",
     "tsx": "^4.21.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.90.0"
   }
 }
