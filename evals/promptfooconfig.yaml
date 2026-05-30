@@ -1,0 +1,148 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+description: "mcp-evm tool-call evals"
+
+prompts:
+  - "{{ user }}"
+
+providers:
+  - id: anthropic:messages:claude-haiku-4-5
+    label: haiku
+    config:
+      tools: file://tools.json
+      max_tokens: 1024
+      temperature: 0
+  # Opus 4.7 deprecated `temperature`, and promptfoo always sends a default.
+  # Re-enable when promptfoo supports the new model knob set.
+  # - id: anthropic:messages:claude-opus-4-7
+  #   label: opus
+  #   config:
+  #     tools: file://tools.json
+  #     max_tokens: 1024
+
+tests:
+  # ---- get_balance ---------------------------------------------------------
+  - description: "balance on ethereum (explicit chain)"
+    vars:
+      user: "What's the balance of 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 on ethereum?"
+    assert:
+      - type: javascript
+        value: file://asserts/tool-call.js
+        config:
+          tool: get_balance
+          args:
+            address: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+            chain: [ethereum, eth, mainnet, "1", 1]
+
+  - description: "balance on monad (alias)"
+    vars:
+      user: "How much MON does 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 hold on monad?"
+    assert:
+      - type: javascript
+        value: file://asserts/tool-call.js
+        config:
+          tool: get_balance
+          args:
+            chain: [monad, "monad-mainnet", "143", 143]
+
+  - description: "balance without explicit chain (should default)"
+    vars:
+      user: "balance of 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+    assert:
+      - type: javascript
+        value: file://asserts/tool-call.js
+        config:
+          tool: get_balance
+
+  # ---- get_transactions ----------------------------------------------------
+  - description: "list recent transactions on polygon"
+    vars:
+      user: "Show me the last 5 transactions for 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 on polygon."
+    assert:
+      - type: javascript
+        value: file://asserts/tool-call.js
+        config:
+          tool: get_transactions
+          args:
+            chain: [polygon, matic, "137", 137]
+            offset: [5]
+
+  - description: "list oldest transactions (asc sort)"
+    vars:
+      user: "Show me the oldest 10 txs from 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 on arbitrum, earliest first."
+    assert:
+      - type: javascript
+        value: file://asserts/tool-call.js
+        config:
+          tool: get_transactions
+          args:
+            chain: [arbitrum, "42161", 42161]
+            sort: [asc]
+            offset: [10]
+
+  # ---- get_tx --------------------------------------------------------------
+  - description: "lookup a tx by hash on ethereum"
+    vars:
+      user: "Did tx 0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060 succeed on ethereum?"
+    assert:
+      - type: javascript
+        value: file://asserts/tool-call.js
+        config:
+          tool: get_tx
+          args:
+            hash: "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060"
+            chain: [ethereum, eth, mainnet, "1", 1]
+
+  # ---- get_gas_price -------------------------------------------------------
+  - description: "current gas on ethereum"
+    vars:
+      user: "What's the current gas price on ethereum?"
+    assert:
+      - type: javascript
+        value: file://asserts/tool-call.js
+        config:
+          tool: get_gas_price
+          args:
+            chain: [ethereum, eth, mainnet, "1", 1]
+
+  - description: "current gas on monad (fallback path)"
+    vars:
+      user: "What's gas like on monad right now?"
+    assert:
+      - type: javascript
+        value: file://asserts/tool-call.js
+        config:
+          tool: get_gas_price
+          args:
+            chain: [monad, "monad-mainnet", "143", 143]
+
+  - description: "gas with no chain mentioned"
+    vars:
+      user: "what's gas right now"
+    assert:
+      - type: javascript
+        value: file://asserts/tool-call.js
+        config:
+          tool: get_gas_price
+
+  # ---- Negative / ambiguity --------------------------------------------------
+  - description: "explicitly chain-typo: 'mainnet' should not be Monad"
+    vars:
+      user: "balance of 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 on mainnet"
+    assert:
+      - type: javascript
+        value: file://asserts/tool-call.js
+        config:
+          tool: get_balance
+          args:
+            chain: [ethereum, eth, mainnet, "1", 1]
+
+  - description: "L2 short name: 'op' should map to optimism"
+    vars:
+      user: "balance of 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 on op mainnet"
+    assert:
+      - type: javascript
+        value: file://asserts/tool-call.js
+        config:
+          tool: get_balance
+          args:
+            chain: [optimism, op, "10", 10]

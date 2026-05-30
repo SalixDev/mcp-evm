@@ -7,7 +7,10 @@
     "dev": "tsx src/server.ts",
     "dev:worker": "wrangler dev",
     "deploy": "wrangler deploy",
-    "build": "tsc"
+    "build": "tsc",
+    "eval": "promptfoo eval -c evals/promptfooconfig.yaml",
+    "eval:view": "promptfoo view -y",
+    "eval:ci": "promptfoo eval -c evals/promptfooconfig.yaml --no-cache"
   },
   "repository": {
     "type": "git",
@@ -30,6 +33,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260511.1",
     "@types/node": "^25.6.2",
+    "promptfoo": "^0.120.19",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
     "wrangler": "^4.90.0"

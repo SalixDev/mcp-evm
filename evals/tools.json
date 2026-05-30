@@ -1,0 +1,54 @@
+[
+  {
+    "name": "get_balance",
+    "description": "Get the native token balance (in wei) for an address on an EVM chain.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "address": { "type": "string", "description": "0x-prefixed address." },
+        "chain": {
+          "type": "string",
+          "description": "Chain to query. Numeric chainid (e.g. 143) or alias ('monad', 'monad-testnet', 'polygon', 'ethereum', 'arbitrum', 'optimism', 'base', 'bsc'). Defaults to ethereum mainnet."
+        }
+      },
+      "required": ["address"]
+    }
+  },
+  {
+    "name": "get_transactions",
+    "description": "List normal transactions (sent + received) for an address, newest first by default.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "address": { "type": "string" },
+        "page": { "type": "number" },
+        "offset": { "type": "number", "description": "Page size, max 100." },
+        "sort": { "type": "string", "enum": ["asc", "desc"] },
+        "chain": { "type": "string" }
+      },
+      "required": ["address"]
+    }
+  },
+  {
+    "name": "get_tx",
+    "description": "Get a single transaction by hash plus its receipt status.",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "hash": { "type": "string", "description": "0x-prefixed 32-byte tx hash." },
+        "chain": { "type": "string" }
+      },
+      "required": ["hash"]
+    }
+  },
+  {
+    "name": "get_gas_price",
+    "description": "Get current gas oracle (safe / propose / fast gwei prices and the last block).",
+    "input_schema": {
+      "type": "object",
+      "properties": {
+        "chain": { "type": "string" }
+      }
+    }
+  }
+]
