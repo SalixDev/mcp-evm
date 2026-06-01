@@ -9,7 +9,7 @@ For each test prompt, the eval calls the Anthropic API with the same tool defini
 - The model chose the right **tool** for the prompt.
 - The model passed the right **arguments** (chain alias, address, sort, etc.).
 
-Runs against **Haiku 4.5** as the cheap/fast baseline. An Opus 4.7 provider is wired up but commented out — promptfoo (`0.120.x`) still sends a default `temperature` param which Opus 4.7 deprecated, so it 400s. Re-enable once promptfoo drops the default or exposes a way to suppress it.
+Runs against **Haiku 4.5** at `temperature: 0` for deterministic regression results.
 
 ## Run locally
 

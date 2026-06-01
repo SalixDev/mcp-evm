@@ -11,13 +11,6 @@ providers:
       tools: file://tools.json
       max_tokens: 1024
       temperature: 0
-  # Opus 4.7 deprecated `temperature`, and promptfoo always sends a default.
-  # Re-enable when promptfoo supports the new model knob set.
-  # - id: anthropic:messages:claude-opus-4-7
-  #   label: opus
-  #   config:
-  #     tools: file://tools.json
-  #     max_tokens: 1024
 
 tests:
   # ---- get_balance ---------------------------------------------------------
