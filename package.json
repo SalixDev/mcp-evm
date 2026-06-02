@@ -8,6 +8,8 @@
     "dev:worker": "wrangler dev",
     "deploy": "wrangler deploy",
     "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "eval": "promptfoo eval -c evals/promptfooconfig.yaml",
     "eval:view": "promptfoo view -y",
     "eval:ci": "promptfoo eval -c evals/promptfooconfig.yaml --no-cache"
@@ -36,6 +38,7 @@
     "promptfoo": "^0.120.19",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
+    "vitest": "^4.1.8",
     "wrangler": "^4.90.0"
   }
 }
