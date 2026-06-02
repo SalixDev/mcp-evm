@@ -149,3 +149,14 @@ tests:
         config:
           tool: get_balance
           argsAbsent: [chain]
+
+  - description: "balance on BNB Chain (bnb alias should map to BSC chainid 56)"
+    vars:
+      user: "balance of 0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045 on bnb chain"
+    assert:
+      - type: javascript
+        value: file://asserts/tool-call.js
+        config:
+          tool: get_balance
+          args:
+            chain: [bnb, "bnb-chain", bsc, "56", 56]

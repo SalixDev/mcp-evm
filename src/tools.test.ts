@@ -32,6 +32,8 @@ describe("resolveChain", () => {
     expect(resolveChain("optimism", 0)).toBe(10);
     expect(resolveChain("base", 0)).toBe(8453);
     expect(resolveChain("bsc", 0)).toBe(56);
+    expect(resolveChain("bnb", 0)).toBe(56);
+    expect(resolveChain("bnb-chain", 0)).toBe(56);
   });
 
   it("matches aliases case-insensitively", () => {
