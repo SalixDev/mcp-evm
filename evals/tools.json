@@ -8,7 +8,7 @@
         "address": { "type": "string", "description": "0x-prefixed address." },
         "chain": {
           "type": "string",
-          "description": "Chain to query. Numeric chainid (e.g. 143) or alias ('monad', 'monad-testnet', 'polygon', 'ethereum', 'arbitrum', 'optimism', 'base', 'bsc'). Defaults to monad mainnet."
+          "description": "Chain to query. Numeric chainid (e.g. 143) or alias ('monad', 'monad-testnet', 'polygon', 'ethereum', 'arbitrum', 'optimism', 'base', 'bsc', 'bnb'). Defaults to monad mainnet."
         }
       },
       "required": ["address"]

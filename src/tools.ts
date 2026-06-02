@@ -19,6 +19,8 @@ const CHAIN_ALIASES: Record<string, number> = {
   optimism: 10,
   base: 8453,
   bsc: 56,
+  bnb: 56,
+  "bnb-chain": 56,
   monad: 143,
   "monad-mainnet": 143,
   "monad-testnet": 10143,
@@ -187,7 +189,7 @@ const chainArgsSchema = {
   chain: {
     type: "string",
     description:
-      "Chain to query. Numeric chainid (e.g. 143) or alias ('monad', 'monad-testnet', 'polygon', 'ethereum', 'arbitrum', 'optimism', 'base', 'bsc'). Defaults to env DEFAULT_CHAIN.",
+      "Chain to query. Numeric chainid (e.g. 143) or alias ('monad', 'monad-testnet', 'polygon', 'ethereum', 'arbitrum', 'optimism', 'base', 'bsc', 'bnb'). Defaults to env DEFAULT_CHAIN.",
   },
 } as const;
 
